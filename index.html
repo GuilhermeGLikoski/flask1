@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <h1>Minha Lista de Tarefas</h1>
+
+    <form method="POST" action="/adicionar">
+        <div>
+            <label for="descricao">Nova Tarefa:</label>
+            <input type="text" id="descricao" name="descricao" required>
+            <button type="submit">Adicionar</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <h2>Tarefas:</h2>
+    <ul>
+        {% for tarefa in tarefas %}
+        <li>
+            {{ tarefa['descricao'] }}
+            {% if tarefa['concluida'] %}
+                (Concluída)
+            {% else %}
+                (Pendente)
+            {% endif %}
+        </li>
+        {% else %}
+        <li>Nenhuma tarefa por enquanto.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
