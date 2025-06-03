@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-# cria uma instancia 
+# cria uma instancia
 app = Flask(__name__)
 
 # lista
@@ -8,7 +8,7 @@ tarefas = []
 # contado de id para atribuir em cada tarefa
 contador_id = 1
 
-# rota principal que me apresenta todas as tarefas 
+# rota principal que me apresenta todas as tarefas
 @app.route('/')
 def listar_tarefas():
     # renderiza o 'index.html' e passa a lista de tarefas para ele
@@ -30,15 +30,37 @@ def adicionar_tarefa():
     # redireciona o usuario de volta para a página principal para ver a lista atualizada
     return redirect(url_for('listar_tarefas'))
 
+@app.route('/concluir/<int:id>', methods=['POST'])
+def concluir_tarefa(id):
+    # esta funcao e chamada quando uma requisicao em 'post' é feita para '/concluir/<id>'
+    # O <int:id> na rota garante que 'id' seja um inteiro
+    for tarefa in tarefas:
+        # vai ver se na lista tarefa ha o mesmo id  que o usuario quer marcar como concluido
+        if tarefa['id'] == id:
+            # se o ID da tarefa atual corresponde ao ID passado na URL
+            tarefa['concluida'] = not tarefa['concluida']
+            # inverte o status de concluída da tarefa (True para False, False para True)
+            break
+            # sai do loop assim que a tarefa e encontrada e atualizada
+    return redirect(url_for('listar_tarefas'))
+    # leva o usuário de volta para a página principal
+
+@app.route('/remover/<int:id>', methods=['POST'])
+def remover_tarefa(id):
+    # esta funcao e chamada quando uma requisição em 'post' é feita para '/remover/<id>'
+    # o <int:id> na rota garante que 'id' seja um inteiro
+    global tarefas
+    # Usamos uma list comprehension (compressao de linha) para criar uma nova lista 'tarefas'
+    # contendo apenas as tarefas cujo ID nao corresponde ao ID passado na URL
+    tarefas = [tarefa for tarefa in tarefas if tarefa['id'] != id]
+    return redirect(url_for('listar_tarefas'))
+    # redireciona o usuário de volta para a página principal
+
 # garante que o servidor flask só rode se o script for executado diretamente
 if __name__ == '__main__':
 
     # mostra os erros e tem recarregamento automático
     app.run(debug=True)
-
-
-
-
 
 
 
