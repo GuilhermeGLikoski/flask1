@@ -20,12 +20,18 @@
     <ul>
         {% for tarefa in tarefas %}
         <li>
-            {{ tarefa['descricao'] }}
-            {% if tarefa['concluida'] %}
-                (Concluída)
-            {% else %}
-                (Pendente)
-            {% endif %}
+            <form method="POST" action="/concluir/{{ tarefa['id'] }}">
+                <input type="checkbox" name="concluida" {% if tarefa['concluida'] %} checked {% endif %} onchange="this.form.submit()">
+                {{ tarefa['descricao'] }}
+                {% if tarefa['concluida'] %}
+                    (Concluída)
+                {% else %}
+                    (Pendente)
+                {% endif %}
+            </form>
+            <form method="POST" action="/remover/{{ tarefa['id'] }}" style="display: inline;">
+                <button type="submit">Remover</button>
+            </form>
         </li>
         {% else %}
         <li>Nenhuma tarefa por enquanto.</li>
