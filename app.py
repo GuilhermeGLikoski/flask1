@@ -75,3 +75,4 @@ if __name__ == '__main__':
 # contador_id += 1: apos todos os passos anteriores, adiciona 1 a variavel, essa linha garante que cada tarefa receba um ID diferente do anterior.
 # url_for: gera a URL para uma rota com base no nome da função que define essa rota.
 # redirect(): resposta HTTP que leva o navegador do usuário a fazer uma nova requisição para uma URL diferente.
+# metodo "POST":usado para enviar dados do cliente para o servidor.
